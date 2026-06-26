@@ -1,0 +1,30 @@
+pydub
+ffmpeg-python
+python-dotenv
+google-generativeai
+demucs
+librosa
+numpy
+torch
+torchaudio
+yt-dlp
+PySocks
+httpx[socks]
+
+# --- WhisperX Core Dependencies ---
+faster-whisper
+ctranslate2
+# --- XTTSv2 ONNX INT8 Dependencies ---
+onnxruntime
+soundfile
+hangul-romanize
+jamo
+cutlet
+fugashi
+unidecode
+g2p_en
+pypinyin
+num2words
+spacy
+
+# (Old dependencies removed: edge-tts, openai-whisper, pyannote.audio)

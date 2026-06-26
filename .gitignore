@@ -1,0 +1,24 @@
+# Python & Environments
+.venv/
+__pycache__/
+*.pyc
+
+# Secrets
+.env
+
+# Media & Generated Output
+*.mp4
+*.wav
+*.mkv
+*_translated_ru/
+temp_tts/
+demucs_out/
+
+# Models & Weights
+xtts_models/
+OpenVoice/
+
+# Misc
+*.zip
+*.exe
+test_openvoice.py

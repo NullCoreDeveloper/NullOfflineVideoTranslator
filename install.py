@@ -63,7 +63,8 @@ def check_system_deps():
         print("Пожалуйста, установите rubberband (нужен для умного растяжения звука):")
         print("Ubuntu/Debian: sudo apt install rubberband-cli")
         print("Mac (Homebrew): brew install rubberband")
-        print("Windows: Скачайте и добавьте в PATH")
+        print("Windows: Скачайте ZIP-архив с официального сайта (https://breakfastquay.com/rubberband/)")
+        print("         распакуйте и добавьте путь к rubberband.exe в системный PATH.")
         sys.exit(1)
         
     print("✅ Системные зависимости (FFmpeg, Rubberband) установлены.")

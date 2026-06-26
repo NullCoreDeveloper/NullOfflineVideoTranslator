@@ -75,6 +75,8 @@ notebook = {
         "        repo_url = f\"https://github.com/{GITHUB_REPO}.git\"\n",
         "    \n",
         "    !git clone {repo_url} video-translator\n",
+        "else:\n",
+        "    !cd video-translator && git pull\n",
         "\n",
         "os.chdir(\"video-translator\")\n",
         "\n",

@@ -11,13 +11,15 @@ import pyrubberband as pyrb
 # Assuming the ONNX inference scripts are in xtts_models/
 sys.path.append(os.path.join(os.path.dirname(__file__), 'xtts_models'))
 
+_xtts_import_error = None
 try:
     from xtts_streaming_pipeline import StreamingTTSPipeline
     import logging
     # Mute both the specific pipeline logger and the root logger that spam token info
     logging.getLogger("data_processing_pipeline").setLevel(logging.ERROR)
     logging.getLogger().setLevel(logging.ERROR)
-except ImportError:
+except ImportError as e:
+    _xtts_import_error = str(e)
     StreamingTTSPipeline = None
 
 # Global pipeline instance to avoid reloading models for every segment
@@ -27,7 +29,7 @@ def get_xtts_pipeline():
     global _xtts_pipeline
     if _xtts_pipeline is None:
         if StreamingTTSPipeline is None:
-            raise RuntimeError("XTTS ONNX scripts not found in xtts_models/")
+            raise RuntimeError(f"XTTS ONNX scripts not found or failed to import. Error: {_xtts_import_error}")
             
         base_dir = os.path.join(os.path.dirname(__file__), 'xtts_models', 'xtts_onnx')
         print(f"Loading XTTSv2 INT8 ONNX models from {base_dir}...")

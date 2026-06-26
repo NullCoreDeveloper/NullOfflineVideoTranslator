@@ -189,6 +189,12 @@ def download_and_quantize_xtts(hf_token):
     print("Скачивание файлов с HuggingFace (это может занять время)...")
     for f in files_to_download:
         dest_path = os.path.join(local_dir, f)
+        
+        # Skip downloading heavy gpt_model.onnx if we already quantized it
+        if f == "xtts_onnx/gpt_model.onnx" and os.path.exists(os.path.join(local_dir, "xtts_onnx/gpt_model_int8.onnx")):
+            print(f"✅ Квантованная модель gpt_model_int8.onnx уже существует. Пропуск скачивания оригинала.")
+            continue
+            
         if not os.path.exists(dest_path):
             print(f"Скачиваю {f}...")
             try:

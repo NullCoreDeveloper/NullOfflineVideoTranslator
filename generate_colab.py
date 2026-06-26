@@ -45,7 +45,7 @@ notebook = {
         "\n",
         "print(\"📦 Установка uv...\")\n",
         "!pip install -q uv\n",
-        "print(\"📦 Быстрое скачивание зависимостей (займет ~40 секунд)...\")\n",
+        "print(\"📦 Быстрое скачивание зависимостей (займет ~2-3 минуты из-за сборки шумодава)...\")\n",
         "!apt-get install -yq rubberband-cli\n",
         "print(\"⚙️ Установка компилятора Rust (нужен для крутого шумодава)...\")\n",
         "!curl -sSf https://sh.rustup.rs > rustup.sh && sh rustup.sh -y -q > /dev/null 2>&1 && rm rustup.sh\n",

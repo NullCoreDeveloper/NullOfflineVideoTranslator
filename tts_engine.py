@@ -67,7 +67,7 @@ async def generate_audio_from_segments(segments, output_path, total_duration_sec
                 print(f"Computing speaker conditioning for {speaker}...")
                 speaker_latents[speaker] = pipeline.get_conditioning_latents(ref_audio)
     
-    current_time = 0
+    current_times = {}
     
     for i, segment in enumerate(segments):
         text = segment.get("text")
@@ -125,13 +125,14 @@ async def generate_audio_from_segments(segments, output_path, total_duration_sec
                 
                 segment_audio = AudioSegment.from_file(speed_temp_out)
                 
-            # Prevent overlapping by forcing start_time to be at least current_time
-            start_time = max(segment["start"] * 1000, current_time)
+            # Prevent overlapping by forcing start_time to be at least current_time for THIS speaker
+            speaker_current_time = current_times.get(speaker, 0)
+            start_time = max(segment["start"] * 1000, speaker_current_time)
             
             combined_audio = combined_audio.overlay(segment_audio, position=int(start_time))
             
-            # Update current_time to end of this segment
-            current_time = start_time + len(segment_audio)
+            # Update current_time for THIS speaker to end of this segment
+            current_times[speaker] = start_time + len(segment_audio)
             
         except Exception as e:
             print(f"Error synthesizing segment {i}: {e}")

@@ -6,6 +6,9 @@ load_dotenv()
 
 HF_TOKEN = os.getenv("HF_TOKEN", "")
 
+# Опциональное включение INT8 квантования для слабых процессоров (только если нет видеокарты NVIDIA!)
+USE_INT8_QUANTIZATION = os.getenv("USE_INT8_QUANTIZATION", "False").lower() == "true"
+
 # Парсим список ключей из переменной окружения (по умолчанию пусто, ключи должны быть в .env)
 gemini_keys_str = os.getenv("GEMINI_API_KEYS", "")
 GEMINI_API_KEYS = [k.strip() for k in gemini_keys_str.split(",") if k.strip()]

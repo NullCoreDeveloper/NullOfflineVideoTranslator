@@ -31,19 +31,23 @@ def get_xtts_pipeline():
         if StreamingTTSPipeline is None:
             raise RuntimeError(f"XTTS ONNX scripts not found or failed to import. Error: {_xtts_import_error}")
             
+        import config
         base_dir = os.path.join(os.path.dirname(__file__), 'xtts_models', 'xtts_onnx')
-        print(f"Loading XTTSv2 INT8 ONNX models from {base_dir}...")
+        mode_str = "INT8" if config.USE_INT8_QUANTIZATION else "FP32"
+        print(f"Loading XTTSv2 {mode_str} ONNX models from {base_dir}...")
         _xtts_pipeline = StreamingTTSPipeline(
             model_dir=base_dir,
             vocab_path=os.path.join(base_dir, 'vocab.json'),
             mel_norms_path=os.path.join(base_dir, 'mel_stats.npy'),
-            use_int8_gpt=False
+            use_int8_gpt=config.USE_INT8_QUANTIZATION
         )
     return _xtts_pipeline
 
 async def generate_audio_from_segments(segments, output_path, total_duration_sec, speaker_profiles=None, voice_cloner=None, target_lang="ru"):
-    """Generates full audio track from translated segments using XTTSv2 INT8."""
-    print(f"Generating TTS audio using XTTSv2 (INT8) for {len(segments)} segments...")
+    """Generates full audio track from translated segments using XTTSv2."""
+    import config
+    mode_str = "INT8" if config.USE_INT8_QUANTIZATION else "FP32"
+    print(f"Generating TTS audio using XTTSv2 ({mode_str}) for {len(segments)} segments...")
     
     combined_audio = AudioSegment.silent(duration=int(total_duration_sec * 1000))
     

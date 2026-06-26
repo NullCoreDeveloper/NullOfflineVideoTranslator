@@ -141,6 +141,15 @@ def get_speaker_sample(audio_path, segments, speaker, output_dir, target_duratio
         print(f"✨ Enhancing voice sample for {speaker} using DeepFilterNet...")
         import subprocess
         import sys
+        
+        # Опциональная проверка на установленную библиотеку
+        try:
+            import df.enhance
+        except ImportError:
+            print("⚠️ ВНИМАНИЕ: DeepFilterNet не установлен! Очистка голоса пропущена.")
+            print("💡 Для идеального клонирования установите: pip install deepfilternet (Внимание: скачает ~3 ГБ PyTorch)")
+            return sample_path
+
         clean_sample_path = os.path.join(sample_dir, f"{speaker}_sample_DeepFilterNet3.wav")
         # Run deepFilter directly via Python to bypass PATH issues
         cmd = [

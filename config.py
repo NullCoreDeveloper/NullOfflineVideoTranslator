@@ -23,7 +23,7 @@ GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL_NAME", "gemini-3.1-flash-lite")
 GEMINI_TEMPERATURE = float(os.getenv("GEMINI_TEMPERATURE", "0.2"))
 GEMINI_BATCH_SIZE = int(os.getenv("GEMINI_BATCH_SIZE", "100"))
 
-GEMINI_SYSTEM_PROMPT = os.getenv("GEMINI_SYSTEM_PROMPT", """You are a professional video translator. Translate the 'text' field in the following JSON list of subtitle segments from English to Russian.
+GEMINI_SYSTEM_PROMPT = os.getenv("GEMINI_SYSTEM_PROMPT", """You are a professional video translator. Translate the 'text' field in the following JSON list of subtitle segments into {TARGET_LANGUAGE}.
 Pay attention to the global context of the segments. This is likely a gaming or internet culture video. 
 Crucial Rules:
 1. Translate gamer tags, usernames, and slang correctly based on context. Do NOT translate names literally (e.g. "Dream" should be "Дрим", not "Мечта". "Notch" is "Нотч", not "Зарубка").

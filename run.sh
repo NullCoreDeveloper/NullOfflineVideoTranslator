@@ -1,6 +1,7 @@
 #!/bin/bash
 source .venv/bin/activate
 URL=${1:-"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}
+TARGET_LANG=${2:-"ru"}
 
 # Получаем оригинальное название видео с YouTube
 RAW_TITLE=$(yt-dlp --print "%(title)s" "$URL")
@@ -29,5 +30,5 @@ if [ ! -f "$FILENAME" ]; then
 fi
 
 # Запускаем обработку
-python3 main.py "$FILENAME"
+python3 main.py "$FILENAME" --target_lang "$TARGET_LANG"
 echo "готово!"

@@ -89,7 +89,7 @@ async def generate_audio_from_segments(segments, output_path, total_duration_sec
                 text_chunks = textwrap.wrap(text, width=150, break_long_words=False)
                 
                 for chunk in text_chunks:
-                    for audio_chunk in pipeline.inference_stream(chunk, "ru", gpt_cond_latent, speaker_embedding, stream_chunk_size=0):
+                    for audio_chunk in pipeline.inference_stream(chunk, target_lang, gpt_cond_latent, speaker_embedding, stream_chunk_size=0):
                         all_audio.append(audio_chunk)
                         
                 full_wav = np.concatenate(all_audio, axis=0)

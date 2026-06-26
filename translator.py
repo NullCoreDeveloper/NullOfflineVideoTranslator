@@ -21,9 +21,20 @@ def configure_gemini():
     _current_key_idx = (_current_key_idx + 1) % len(config.GEMINI_API_KEYS)
     return True
 
+def get_language_name(code):
+    langs = {
+        "ru": "Russian", "en": "English", "es": "Spanish", "fr": "French",
+        "de": "German", "it": "Italian", "pt": "Portuguese", "pl": "Polish",
+        "tr": "Turkish", "nl": "Dutch", "cs": "Czech", "ar": "Arabic",
+        "zh-cn": "Chinese", "ja": "Japanese", "hu": "Hungarian", "ko": "Korean",
+        "hi": "Hindi"
+    }
+    return langs.get(code.lower(), "Russian")
+
 def translate_segments(segments, target_lang="ru"):
     """Translates a list of Whisper segments using Gemini API."""
-    print(f"Translating {len(segments)} segments to {target_lang} using Gemini...")
+    lang_name = get_language_name(target_lang)
+    print(f"Translating {len(segments)} segments to {lang_name} using Gemini...")
     
     if not segments:
         return []
@@ -48,10 +59,12 @@ def translate_segments(segments, target_lang="ru"):
         HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
     }
 
+    dynamic_prompt = config.GEMINI_SYSTEM_PROMPT.replace("{TARGET_LANGUAGE}", lang_name)
+
     model = genai.GenerativeModel(
         model_name=config.GEMINI_MODEL_NAME,
         generation_config=generation_config,
-        system_instruction=config.GEMINI_SYSTEM_PROMPT,
+        system_instruction=dynamic_prompt,
         safety_settings=safety_settings
     )
 

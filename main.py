@@ -16,6 +16,7 @@ def main():
     parser = argparse.ArgumentParser(description="Video Translator (EN -> RU)")
     parser.add_argument("video_path", help="Path to the input video file")
     parser.add_argument("--hf_token", help="HuggingFace Token for Diarization (pyannote.audio)", default=getattr(config, "HF_TOKEN", os.environ.get("HF_TOKEN")))
+    parser.add_argument("--target_lang", help="Target language code (e.g. ru, en, es)", default="ru")
     parser.add_argument("--mock_diarization", action="store_true", help="Use mock diarization for testing")
     parser.add_argument("--keep_temp", action="store_true", help="Keep temporary files")
     
@@ -101,9 +102,9 @@ def main():
                 with open(raw_segments_path, "w", encoding="utf-8") as f:
                     json.dump(segments, f, ensure_ascii=False, indent=2)
             
-            # 4. Translate Text (EN -> RU)
-            print("Step 4: Translating...")
-            translated_segments = translator.translate_segments(segments, target_lang="ru")
+            # 4. Translate Text (EN -> Target)
+            print(f"Step 4: Translating to {args.target_lang}...")
+            translated_segments = translator.translate_segments(segments, target_lang=args.target_lang)
             
             # Save final translated segments
             with open(segments_path, "w", encoding="utf-8") as f:
@@ -152,7 +153,8 @@ def main():
                         tts_audio_path,
                         duration_sec,
                         speaker_profiles=speaker_profiles,
-                        voice_cloner=voice_cloner
+                        voice_cloner=voice_cloner,
+                        target_lang=args.target_lang
                     ))
             except Exception as e:
                 print(f"TTS audio exists but seems corrupted ({e}). Regenerating...")
@@ -163,7 +165,8 @@ def main():
                     tts_audio_path,
                     duration_sec,
                     speaker_profiles=speaker_profiles,
-                    voice_cloner=voice_cloner
+                    voice_cloner=voice_cloner,
+                    target_lang=args.target_lang
                 ))
         else:
             asyncio.run(tts_engine.generate_audio_from_segments(
@@ -171,7 +174,8 @@ def main():
                 tts_audio_path,
                 duration_sec,
                 speaker_profiles=speaker_profiles,
-                voice_cloner=voice_cloner
+                voice_cloner=voice_cloner,
+                target_lang=args.target_lang
             ))
         
         # 6. Merge New Vocals with Background

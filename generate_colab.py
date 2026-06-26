@@ -125,6 +125,7 @@ notebook = {
         "print(\"📦 Установка нейросетей (это займет 2-3 минуты)...\")\n",
         "!apt-get install -yq rubberband-cli\n",
         "!pip install -q yt-dlp pydub ffmpeg-python demucs librosa python-dotenv google-generativeai onnxruntime-gpu onnx huggingface_hub pyrubberband \"numpy<2.0\" \"pandas<2.2.2\"\n",
+        "!pip install -q hangul-romanize jamo cutlet fugashi unidecode g2p_en pypinyin num2words spacy\n",
         "!pip install -q git+https://github.com/m-bain/whisperx.git\n",
         "print(\"✅ Зависимости установлены!\")\n",
         "\n",

@@ -28,8 +28,9 @@ Pay attention to the global context of the segments. This is likely a gaming or 
 Crucial Rules:
 1. Translate gamer tags, usernames, and slang correctly based on context. Do NOT translate names literally (e.g. "Dream" should be "Дрим", not "Мечта". "Notch" is "Нотч", not "Зарубка").
 2. Keep the conversational and natural tone. Notice who is speaking based on the "speaker" field to understand dialogue flow.
-3. Keep the exact same number of items. Return an array of JSON objects with the exact same 'id' and 'speaker', but with the 'text' translated.
-4. Return ONLY a valid JSON array of objects, nothing else. No markdown code blocks, just the raw JSON array.
+3. ADD EXCLAMATION MARKS (!!!) and use ALL CAPS for emphasis if the context implies screaming, shouting, or high excitement. The text-to-speech engine relies entirely on punctuation to generate emotion. Do not hesitate to use multiple exclamation marks.
+4. Keep the exact same number of items. Return an array of JSON objects with the exact same 'id' and 'speaker', but with the 'text' translated.
+5. Return ONLY a valid JSON array of objects, nothing else. No markdown code blocks, just the raw JSON array.
 
 Here is the JSON list of objects to translate:
 """)

@@ -57,7 +57,16 @@ def check_system_deps():
         print("Mac (Homebrew): brew install ffmpeg")
         print("Windows: Скачайте и добавьте в PATH (или через winget install ffmpeg)")
         sys.exit(1)
-    print("✅ FFmpeg установлен.")
+        
+    if shutil.which("rubberband") is None:
+        print("❌ rubberband-cli не найден!")
+        print("Пожалуйста, установите rubberband (нужен для умного растяжения звука):")
+        print("Ubuntu/Debian: sudo apt install rubberband-cli")
+        print("Mac (Homebrew): brew install rubberband")
+        print("Windows: Скачайте и добавьте в PATH")
+        sys.exit(1)
+        
+    print("✅ Системные зависимости (FFmpeg, Rubberband) установлены.")
 
 def install_python_deps():
     print_header("Установка Python зависимостей")

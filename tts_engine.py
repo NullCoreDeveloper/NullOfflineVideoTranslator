@@ -6,6 +6,7 @@ import sys
 from pydub import AudioSegment
 import shutil
 import ffmpeg
+import pyrubberband as pyrb
 
 # Assuming the ONNX inference scripts are in xtts_models/
 sys.path.append(os.path.join(os.path.dirname(__file__), 'xtts_models'))
@@ -106,16 +107,14 @@ async def generate_audio_from_segments(segments, output_path, total_duration_sec
                 speed_factor = segment_duration_ms / target_duration_ms
                 speed_factor = min(speed_factor, 1.5)
                 
-                print(f"Speeding up segment {i} by {speed_factor:.2f}x")
+                print(f"Speeding up segment {i} by {speed_factor:.2f}x using Rubberband")
                 speed_temp_out = os.path.join(temp_dir, f"seg_{i}_fast.wav")
                 
-                (
-                    ffmpeg
-                    .input(temp_file)
-                    .filter('atempo', speed_factor)
-                    .output(speed_temp_out)
-                    .run(overwrite_output=True, quiet=True)
-                )
+                # Smart time stretch using Rubberband
+                y, sr = sf.read(temp_file)
+                y_stretched = pyrb.time_stretch(y, sr, speed_factor)
+                sf.write(speed_temp_out, y_stretched, sr)
+                
                 segment_audio = AudioSegment.from_file(speed_temp_out)
                 
             start_time = segment["start"] * 1000

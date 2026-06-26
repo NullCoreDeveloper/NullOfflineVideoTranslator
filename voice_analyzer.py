@@ -136,4 +136,19 @@ def get_speaker_sample(audio_path, segments, speaker, output_dir, target_duratio
     sample_path = os.path.join(sample_dir, f"{speaker}_sample.wav")
     combined_sample.export(sample_path, format="wav")
     
+    # Apply DeepFilterNet to clean the sample and remove demucs artifacts
+    try:
+        print(f"✨ Enhancing voice sample for {speaker} using DeepFilterNet...")
+        import subprocess
+        clean_sample_path = os.path.join(sample_dir, f"{speaker}_sample_DeepFilterNet3.wav")
+        # Run deepFilter CLI (automatically unloads from VRAM after completion)
+        subprocess.run(["deepFilter", sample_path, "-o", sample_dir], check=True, capture_output=True)
+        if os.path.exists(clean_sample_path):
+            print("✨ Voice sample successfully cleaned!")
+            return clean_sample_path
+        else:
+            print("⚠️ DeepFilterNet output file not found. Using original sample.")
+    except Exception as e:
+        print(f"⚠️ DeepFilterNet enhancement failed: {e}. Using original uncleaned sample.")
+    
     return sample_path

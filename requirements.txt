@@ -31,3 +31,4 @@ spacy
 # (Old dependencies removed: edge-tts, openai-whisper, pyannote.audio)
 onnx\nhuggingface_hub
 pyrubberband
+deepfilternet

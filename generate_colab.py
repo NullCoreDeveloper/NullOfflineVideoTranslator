@@ -114,7 +114,15 @@ notebook = {
         "        print(f\"🎥 Обработка загруженного файла: {LOCAL_FILE} -> {TARGET_LANGUAGE}\")\n",
         "        !python3 main.py \"{LOCAL_FILE}\" --target_lang \"{TARGET_LANGUAGE}\"\n",
         "\n",
-        "print(\"\\n🎉 Готово! Ваш .mp4 файл лежит в панели слева.\")"
+        "import glob\n",
+        "result_files = glob.glob(\"*_translated_*/*.mp4\")\n",
+        "if result_files:\n",
+        "    latest_file = max(result_files, key=os.path.getctime)\n",
+        "    print(f\"\\n🎉 Готово! Начинаю автоматическое скачивание файла: {latest_file}\")\n",
+        "    from google.colab import files\n",
+        "    files.download(latest_file)\n",
+        "else:\n",
+        "    print(\"\\n⚠️ Итоговое видео не найдено. Возможно, произошла ошибка.\")"
       ]
     }
   ]

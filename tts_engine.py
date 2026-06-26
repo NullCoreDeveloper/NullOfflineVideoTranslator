@@ -37,7 +37,7 @@ def get_xtts_pipeline():
             model_dir=base_dir,
             vocab_path=os.path.join(base_dir, 'vocab.json'),
             mel_norms_path=os.path.join(base_dir, 'mel_stats.npy'),
-            use_int8_gpt=True
+            use_int8_gpt=False
         )
     return _xtts_pipeline
 

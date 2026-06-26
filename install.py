@@ -184,6 +184,13 @@ def download_and_quantize_xtts(hf_token):
     ]
     
     local_dir = "xtts_models"
+    
+    # If we find an INT8 model but no FP32 model from a previous run, delete the dir to force a clean redownload
+    if os.path.exists(os.path.join(local_dir, "xtts_onnx", "gpt_model_int8.onnx")) and not os.path.exists(os.path.join(local_dir, "xtts_onnx", "gpt_model.onnx")):
+        print("🗑️ Обнаружена старая сжатая (INT8) модель. Удаляю для чистой загрузки FP32-оригинала...")
+        import shutil
+        shutil.rmtree(local_dir)
+        
     os.makedirs(local_dir, exist_ok=True)
     
     print("Скачивание файлов с HuggingFace (это может занять время)...")
@@ -206,32 +213,11 @@ def download_and_quantize_xtts(hf_token):
         else:
             print(f"✅ {f} уже существует. Пропуск.")
             
-    # Quantization
-    print("\nКвантование основной модели GPT (FP32 -> INT8) для ускорения процессора...")
+    # Quantization (Disabled for GPU)
+    print("\n✅ Сохранение оригинальной модели (FP32) для максимальной скорости на GPU...")
     gpt_fp32 = os.path.join(local_dir, "xtts_onnx", "gpt_model.onnx")
-    gpt_int8 = os.path.join(local_dir, "xtts_onnx", "gpt_model_int8.onnx")
-    
-    if os.path.exists(gpt_fp32):
-        if not os.path.exists(gpt_int8):
-            print(f"Начинаю сжатие {gpt_fp32}...")
-            start_time = time.time()
-            quantize_dynamic(
-                model_input=gpt_fp32,
-                model_output=gpt_int8,
-                weight_type=QuantType.QUInt8,
-            )
-            print(f"Сжатие завершено за {time.time() - start_time:.2f} сек.")
-            print(f"Оригинал: {os.path.getsize(gpt_fp32)/1024/1024:.2f} MB -> Сжатая: {os.path.getsize(gpt_int8)/1024/1024:.2f} MB")
-            
-            print("Удаляю оригинальную тяжелую модель для экономии места...")
-            os.remove(gpt_fp32)
-        else:
-            print("Сжатая модель уже существует, оригинал удаляется...")
-            os.remove(gpt_fp32)
-    elif os.path.exists(gpt_int8):
-        print("✅ Квантованная модель (INT8) уже готова.")
-    else:
-        print("❌ Не найдена ни оригинальная, ни сжатая модель GPT!")
+    if not os.path.exists(gpt_fp32):
+        print("❌ Не найдена оригинальная модель GPT (FP32)!")
         sys.exit(1)
         
     print("\nВключение GPU (CUDA) ускорения для XTTS...")

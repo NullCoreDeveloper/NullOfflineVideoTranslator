@@ -64,7 +64,10 @@ def diarize_audio(audio_path, hf_token):
     
     try:
         from whisperx.diarize import DiarizationPipeline
-        diarize_model = DiarizationPipeline(use_auth_token=hf_token, device=device)
+        try:
+            diarize_model = DiarizationPipeline(token=hf_token, device=device)
+        except TypeError:
+            diarize_model = DiarizationPipeline(use_auth_token=hf_token, device=device)
         
         # Load audio from cache if possible
         audio = _audio_cache.get(audio_path)

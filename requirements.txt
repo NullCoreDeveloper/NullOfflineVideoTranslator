@@ -4,7 +4,8 @@ python-dotenv
 google-generativeai
 demucs
 librosa
-numpy<2.0
+numpy
+numba
 torch
 torchaudio
 yt-dlp

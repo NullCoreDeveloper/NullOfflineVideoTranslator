@@ -63,7 +63,8 @@ def diarize_audio(audio_path, hf_token):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     
     try:
-        diarize_model = whisperx.DiarizationPipeline(use_auth_token=hf_token, device=device)
+        from whisperx.diarize import DiarizationPipeline
+        diarize_model = DiarizationPipeline(use_auth_token=hf_token, device=device)
         
         # Load audio from cache if possible
         audio = _audio_cache.get(audio_path)

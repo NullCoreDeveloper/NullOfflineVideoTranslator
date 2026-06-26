@@ -140,9 +140,15 @@ def get_speaker_sample(audio_path, segments, speaker, output_dir, target_duratio
     try:
         print(f"✨ Enhancing voice sample for {speaker} using DeepFilterNet...")
         import subprocess
+        import sys
         clean_sample_path = os.path.join(sample_dir, f"{speaker}_sample_DeepFilterNet3.wav")
-        # Run deepFilter CLI (automatically unloads from VRAM after completion)
-        subprocess.run(["deepFilter", sample_path, "-o", sample_dir], check=True, capture_output=True)
+        # Run deepFilter directly via Python to bypass PATH issues
+        cmd = [
+            sys.executable, "-c",
+            "import sys; from df.enhance import run; sys.argv=['deepFilter', sys.argv[1], '-o', sys.argv[2]]; sys.exit(run())",
+            sample_path, sample_dir
+        ]
+        subprocess.run(cmd, check=True, capture_output=True)
         if os.path.exists(clean_sample_path):
             print("✨ Voice sample successfully cleaned!")
             return clean_sample_path

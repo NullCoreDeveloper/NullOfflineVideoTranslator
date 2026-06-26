@@ -79,7 +79,7 @@ notebook = {
         "\n",
         "# 3. Установка зависимостей (тихая установка)\n",
         "print(\"📦 Установка нейросетей (это займет 2-3 минуты)...\")\n",
-        "!pip install -q yt-dlp pydub ffmpeg-python demucs librosa python-dotenv google-generativeai onnxruntime-gpu \"numpy<2.0\" \"pandas<2.2.2\"\n",
+        "!pip install -q yt-dlp pydub ffmpeg-python demucs librosa python-dotenv google-generativeai onnxruntime-gpu onnx huggingface_hub \"numpy<2.0\" \"pandas<2.2.2\"\n",
         "!pip install -q git+https://github.com/m-bain/whisperx.git\n",
         "print(\"✅ Зависимости установлены!\")\n",
         "\n",

@@ -233,6 +233,16 @@ def download_and_quantize_xtts(hf_token):
     else:
         print("❌ Не найдена ни оригинальная, ни сжатая модель GPT!")
         sys.exit(1)
+        
+    print("\nВключение GPU (CUDA) ускорения для XTTS...")
+    orch_path = os.path.join(local_dir, "xtts_onnx_orchestrator.py")
+    if os.path.exists(orch_path):
+        with open(orch_path, 'r') as f:
+            code = f.read()
+        code = code.replace('["CPUExecutionProvider"]', '["CUDAExecutionProvider", "CPUExecutionProvider"]')
+        with open(orch_path, 'w') as f:
+            f.write(code)
+        print("✅ CUDA Execution Provider активирован для локального ПК!")
 
 def main():
     print_header("Установщик Video Translator (XTTS + WhisperX)")

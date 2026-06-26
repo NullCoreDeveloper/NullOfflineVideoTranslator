@@ -1,6 +1,6 @@
 # 🎬 NullOfflineVideoTranslator (EN ➡️ RU)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NullCoreDeveloper/NullOfflineVideoTranslator/blob/main/NullOfflineVideoTranslator.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NullCoreDeveloper/NullOfflineVideoTranslator/blob/main/NullOfflineVideoTranslator.ipynb) ![visitors](https://visitor-badge.laobi.icu/badge?page_id=NullCoreDeveloper.NullOfflineVideoTranslator)
 
 Полностью автономный пайплайн для перевода англоязычных видео на русский язык. Программа сама скачивает видео, вырезает музыку, распознает текст, переводит его с учетом сленга (через ИИ) и озвучивает клонированным голосом, автоматически подгоняя звук под видеоряд.
 

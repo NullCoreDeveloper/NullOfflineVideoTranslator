@@ -32,7 +32,8 @@ notebook = {
       "cell_type": "code",
       "execution_count": None,
       "metadata": {
-        "id": "setup_cell"
+        "id": "setup_cell",
+        "cellView": "form"
       },
       "outputs": [],
       "source": [
@@ -67,7 +68,8 @@ notebook = {
       "cell_type": "code",
       "execution_count": None,
       "metadata": {
-        "id": "main_cell"
+        "id": "main_cell",
+        "cellView": "form"
       },
       "outputs": [],
       "source": [

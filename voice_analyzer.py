@@ -148,7 +148,10 @@ def get_speaker_sample(audio_path, segments, speaker, output_dir, target_duratio
             "import sys; from df.enhance import run; sys.argv=['deepFilter', sys.argv[1], '-o', sys.argv[2]]; sys.exit(run())",
             sample_path, sample_dir
         ]
-        subprocess.run(cmd, check=True, capture_output=True)
+        result = subprocess.run(cmd, capture_output=True, text=True)
+        if result.returncode != 0:
+            print(f"DeepFilterNet stderr: {result.stderr}")
+            raise Exception(f"Command failed with exit status {result.returncode}")
         if os.path.exists(clean_sample_path):
             print("✨ Voice sample successfully cleaned!")
             return clean_sample_path

@@ -39,7 +39,7 @@ def get_xtts_pipeline():
         )
     return _xtts_pipeline
 
-async def generate_audio_from_segments(segments, output_path, total_duration_sec, speaker_profiles=None, voice_cloner=None):
+async def generate_audio_from_segments(segments, output_path, total_duration_sec, speaker_profiles=None, voice_cloner=None, target_lang="ru"):
     """Generates full audio track from translated segments using XTTSv2 INT8."""
     print(f"Generating TTS audio using XTTSv2 (INT8) for {len(segments)} segments...")
     

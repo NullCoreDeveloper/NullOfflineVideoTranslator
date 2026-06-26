@@ -56,6 +56,12 @@ python3 install.py
 HF_TOKEN=hf_ВАШ_ТОКЕН_ОТ_HUGGINGFACE
 GEMINI_API_KEYS=AIzaSy_ВАШ_КЛЮЧ_1, AIzaSy_ВАШ_КЛЮЧ_2
 ```
+> [!IMPORTANT]
+> **Разрешения HuggingFace:** Для корректной работы разделения голосов (диаризации) с вашим `HF_TOKEN`, вам необходимо зайти на HuggingFace и принять лицензионные соглашения на страницах следующих моделей (нажать **Agree / Accept**):
+> * [XTTSv2 ONNX](https://huggingface.co/pltobing/XTTSv2-Streaming-ONNX)
+> * [Pyannote Diarization 3.1](https://huggingface.co/pyannote/speaker-diarization-3.1)
+> * [Pyannote Diarization Community](https://huggingface.co/pyannote/speaker-diarization-community-1)
+> * [Pyannote Segmentation](https://huggingface.co/pyannote/segmentation-3.0)
 
 ### Шаг 3: Погнали!
 Просто скормите скрипту любую ссылку на YouTube и укажите язык (например, `ru` или `ja`):
